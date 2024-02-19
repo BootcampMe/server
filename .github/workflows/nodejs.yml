@@ -2,7 +2,7 @@ name: creator-api ci
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main', 'qa']
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
       - name: Grant exec for required scripts
         run: npm install
 
