@@ -1,0 +1,31 @@
+name: creator-api ci
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Grant exec for required scripts
+        run: npm install
+
+  deploy:
+    needs: [build]
+    runs-on: self-hosted
+
+    steps:
+      - name: restart pm2 service
+        run: npm run start
